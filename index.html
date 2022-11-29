@@ -1,0 +1,36 @@
+<head> 
+<style> 
+*{
+	font-family: sans-serif;
+}
+</style>
+<script src="spiral.js"> </script>
+</head>
+<body>
+	<h1> Soft Speaker Coil Calculator </h1>
+	<h2> Thread and speaker </h2>
+<form>
+  <label for="speakerOhms">required speaker resistance (ohms) </label>
+  <input type="text" id="speakerOhms" name="speakerOhms" value="4"><br><br>
+  <label for="wireOhms">wire / thread resistance (ohms per meter)</label>
+  <input type="text" id="wireOhms" name="wireOhms" value="0.25"><br><br>
+  <input type="button" value="Find Length" onclick="findLength()"> <br> <br>
+</form>
+
+<h2>Spiral</h2>
+<form>
+<h3>Input</h3>
+  <label for="length">length of wire</label>
+  <input type="text" id="length" name="length"><br><br>
+  <label for="d_in">inner diameter</label>
+  <input type="text" id="d_in" name="d_in"><br><br>
+  <label for="turn_incr">turn increment</label>
+  <input type="text" id="turn_incr" name="turn_incr"><br><br>
+<h3>Output</h3>
+  <label for="d_out">outer diameter</label>
+  <input type="text" id="d_out" name="d_out" placeholder="..."><br><br>
+  <label for="turns">turns</label>
+  <input type="text" id="turns" name="turns" placeholder="..."><br><br>
+  <input type="button" value="Find Spiral" onclick="findSpiral()">
+</form>
+</body>

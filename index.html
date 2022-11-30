@@ -1,14 +1,26 @@
 <head> 
 <style> 
 *{
-	font-family: sans-serif;
+  font-family: sans-serif;
 }
+input  { 
+  background:white;
+  border:1px solid black;
+  padding: 5px;
+  border-radius: 10px;
+ }
+ input:hover { 
+  background:magenta;
+  }
+ input:focus{ 
+  background:yellow;
+  }
 </style>
 <script src="spiral.js"> </script>
 </head>
 <body>
-	<h1> Soft Speaker Coil Calculator </h1>
-	<h2> Thread and speaker </h2>
+  <h1> Soft Speaker Coil Calculator </h1>
+  <h2> Thread and speaker </h2>
 <form>
   <label for="speakerOhms">required speaker resistance (ohms) </label>
   <input type="text" id="speakerOhms" name="speakerOhms" value="4"><br><br>
@@ -16,7 +28,6 @@
   <input type="text" id="wireOhms" name="wireOhms" value="0.25"><br><br>
   <input type="button" value="Find Length" onclick="findLength()"> <br> <br>
 </form>
-
 <h2>Spiral</h2>
 <form>
 <h3>Input</h3>

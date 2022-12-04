@@ -1,3 +1,5 @@
+// Soft Speaker Coil Calculator 
+// Kyle Chisholm - November 2022
 
 function spiralLength(thickness, phi)
 {
@@ -52,9 +54,10 @@ window.onload = function() {
 } 
 
 function findSpiral(){ 
-    // let d_out = getDiameter(length, d_in, thicc, turn_incr);
-    // let turns_out = getSpiralTurns(d_out, d_in, thicc);
-    // let length_adjusted = getSpiralLength(d_out, d_in, thicc);
+     let d_out = getDiameter(length, d_in, thicc, turn_incr);
+     let turns_out = getSpiralTurns(d_out, d_in, thicc);
+     let length_adjusted = getSpiralLength(d_out, d_in, thicc);
+
     document.getElementById("d_out").value=getDiameter(length, d_in, thicc, turn_incr);
     document.getElementById("turns").value=getSpiralTurns(getDiameter(length, d_in, thicc, turn_incr), d_in, thicc);
 }

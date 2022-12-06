@@ -1,6 +1,11 @@
 // Soft Speaker Coil Calculator
 // Kyle Chisholm - November 2022
 
+const cnv_max_size = 600;
+const cnv_padding = 22;
+let cnv_size;
+let cnv;
+
 function spiralLength(thickness, phi) {
     return (
         (thickness / (2.0 * Math.PI)) *
@@ -27,7 +32,8 @@ function getSpiralLength(dia_outer, dia_inner, thickness) {
     return length;
 }
 
-function getDiameter(length, dia_inner, thickness, turn_increment) {
+function getDiameter(length, dia_inner, thickness, segments) {
+    const turn_increment = 1.0 / segments;
     let turns = 0.0;
     let test_length = 0.0;
     let dia_outer = dia_inner;
@@ -39,9 +45,23 @@ function getDiameter(length, dia_inner, thickness, turn_increment) {
     return dia_outer;
 }
 
-function getSpiralPoints(dia_outer, dia_inner, thickness, length_increment) {
-    spiral_points = [[0, 200], [200, 400], [400, 200]];
+function pointToCanvas(x, y, dia_outer, canvas_size) {
+    const scale = canvas_size / dia_outer;
+    return [(x * scale + 0.5 * canvas_size), (-y * scale + 0.5 * canvas_size)];
+}
 
+function getSpiralPoints(dia_outer, dia_inner, thickness, segments, canvas_size) {
+    const turn_increment = 1.0 / segments;
+    let spiral_points = [pointToCanvas( 0.5 * dia_inner, 0.0, dia_outer, canvas_size)];
+    let turns = 0.0;
+    const total_turns = getSpiralTurns(dia_outer, dia_inner, thickness);
+    while (turns < total_turns) {
+        turns += turn_increment;
+        const rad = 0.5 * dia_inner + thickness * turns;
+        const ang = turns * 2.0 * Math.PI;
+        const pnt = pointToCanvas(rad * Math.cos(ang), rad * Math.sin(ang), dia_outer, canvas_size);
+        spiral_points.push(pnt);
+    }
     return spiral_points;
 }
 
@@ -52,66 +72,79 @@ window.onload = function () {
         d_in: 2.5,
         thickness: 1.0,
         length: 16.0 * 2.54 * 12.0,
-        turn_incr: 1.0,
+        segments: 6,
     };
 
     document.getElementById("d_in").value = default_params.d_in;
     document.getElementById("length").value = default_params.length;
-    document.getElementById("turn_incr").value = default_params.turn_incr;
+    document.getElementById("segments").value = default_params.segments;
     document.getElementById("thickness").value = default_params.thickness;
 
-    findSpiral()
+    generateSpiral();
 };
 
 // Draw p5.js
 
 function setup() {
-    createCanvas(400, 400, SVG);
+    // const max_size = windowWidth - cnv_padding;
+    cnv_size = document.getElementById("spiral_visual").offsetWidth;
+    cnv = createCanvas(cnv_size, cnv_size, SVG);
+    cnv.parent("spiral_visual");
     strokeWeight(2);
     stroke(0);
     noFill();
     noLoop();
 }
 
+function windowResized() {
+    cnv_size = document.getElementById("spiral_visual").offsetWidth;
+    resizeCanvas(cnv_size, cnv_size);
+    redraw();
+}
+
 function draw() {
-    background(255);
+    clear();
 
     const input_params = {
         d_in: +document.getElementById("d_in").value,
         d_out: +document.getElementById("d_out").value,
         thickness: +document.getElementById("thickness").value,
-        save_svg: document.getElementById("save_svg").checked,
+        segments: +document.getElementById("segments").value,
     };
 
-    const spiral_points = getSpiralPoints(input_params.d_out, input_params.d_in, input_params.thickness);
+    const spiral_points = getSpiralPoints(
+        input_params.d_out,
+        input_params.d_in,
+        input_params.thickness,
+        input_params.segments,
+        cnv_size
+    );
 
-    if (spiral_points.length > 1)
-    {
+    if (spiral_points.length > 1) {
         let prev = spiral_points[0];
-        for (let k = 1; k < spiral_points.length; k++)
-        {
+        for (let k = 1; k < spiral_points.length; k++) {
             line(prev[0], prev[1], spiral_points[k][0], spiral_points[k][1]);
             prev = spiral_points[k];
         }
-    }
-
-    if (input_params.save_svg)
-    {
-        save("spiral.svg");
     }
 }
 
 // Button click events
 
-function findSpiral() {
+function saveSvg() {
+    redraw();
+    save("spiral.svg");
+}
+
+function generateSpiral() {
     const input_params = {
         d_in: +document.getElementById("d_in").value,
         thickness: +document.getElementById("thickness").value,
         length: +document.getElementById("length").value,
-        turn_incr: +document.getElementById("turn_incr").value,
+        segments: +document.getElementById("segments").value,
     };
 
-    const d_out = getDiameter(input_params.length, input_params.d_in, input_params.thickness, input_params.turn_incr);
+    const d_out = getDiameter(input_params.length, input_params.d_in, input_params.thickness, input_params.segments);
     const turns = getSpiralTurns(d_out, input_params.d_in, input_params.thickness);
     const length_adjusted = getSpiralLength(d_out, input_params.d_in, input_params.thickness);
 

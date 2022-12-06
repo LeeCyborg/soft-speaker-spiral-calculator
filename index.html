@@ -1,11 +1,14 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.1/p5.min.js"></script>
         <script src="https://unpkg.com/p5.js-svg@1.3.3"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.1/addons/p5.dom.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.1/addons/p5.sound.min.js"></script>
         <link rel="stylesheet" href="main.css" />
+        <title>Soft Speaker Coil Calculator</title>
     </head>
     <body>
         <div id="spiral_calc">
@@ -27,11 +30,10 @@
                 <input type="text" id="thickness" name="thickness" /><br /><br />
                 <label for="d_in">inner diameter (cm)</label>
                 <input type="text" id="d_in" name="d_in" /><br /><br />
-                <label for="turn_incr">turn increment</label>
-                <input type="text" id="turn_incr" name="turn_incr" /><br /><br />
-                <input type="checkbox" id="save_svg" name="save_svg" unchecked/>
-                <label for="save_svg">save svg</label><br /><br />
-                <input type="button" value="Find Spiral" onclick="findSpiral()" />
+                <label for="segments">segments</label>
+                <input type="text" id="segments" name="segments" /><br /><br />
+                <input type="button" value="Save SVG" onclick="saveSvg()" />
+                <input type="button" value="Generate Spiral" onclick="generateSpiral()" />
                 <h3>Output</h3>
                 <label for="d_out">outer diameter (cm)</label>
                 <input type="text" id="d_out" name="d_out" placeholder="..." readonly/><br /><br />
@@ -40,6 +42,7 @@
                 <label for="length_adjusted">exact length (cm)</label>
                 <input type="text" id="length_adjusted" name="length_adjusted" placeholder="..." readonly/><br /><br />
             </form>
+            <div id="spiral_visual"></div>
         </div>
         <script src="spiral.js"></script>
     </body>

@@ -1,26 +1,44 @@
-html, body {
+html,
+body {
     padding: 0;
     margin: 0;
     font-family: sans-serif;
 }
 
 #spiral_calc {
-    display: block;
     padding: 10px;
     min-width: 200px;
 }
 
+#spiral_visual {
+    box-shadow: 0px 0px 0px 1px black;
+    max-width: 600px;
+}
+
 input {
     background: white;
+    color: black;
+    border: 1px solid black;
+    padding: 5px;
+    border-radius: 10px;
+}
+
+input[type=button] {
+    background: black;
+    color: white;
     border: 1px solid black;
     padding: 5px;
     border-radius: 10px;
 }
 
 input:hover {
+    color: black;
+    border: 1px solid black;
     background: magenta;
 }
 
 input:focus {
+    color: black;
+    border: 1px solid black;
     background: yellow;
 }

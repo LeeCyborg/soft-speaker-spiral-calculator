@@ -6,13 +6,25 @@ body {
 }
 
 #spiral_calc {
-    padding: 10px;
     min-width: 200px;
 }
+#spiralspec, #thread{ 
+    width:50%;
+    float:left;
+    min-height:100px;
+ }
+p.note{ 
+    font-size:small;
+    color:grey;
+ }
+#container{
+padding:10px;
 
+}
 #spiral_visual {
-    box-shadow: 0px 0px 0px 1px black;
     max-width: 600px;
+   margin: 0 auto;
+
 }
 
 input {
@@ -42,3 +54,15 @@ input:focus {
     border: 1px solid black;
     background: yellow;
 }
+
+h1{ 
+    background:magenta;
+    padding:10px;
+    margin:0px;
+    width:100%;
+    border-bottom: 2px solid black;
+ }
+ h2 { 
+    border-left: solid 3px black;
+    padding-left: 20px;
+  }

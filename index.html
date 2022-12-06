@@ -11,16 +11,13 @@
         <title>Soft Speaker Coil Calculator</title>
     </head>
     <body>
+        <h1>Soft Speaker Coil Calculator</h1>
+        <div id="container">
         <div id="spiral_calc">
-            <h1>Soft Speaker Coil Calculator</h1>
-            <h2>Thread and speaker</h2>
-            <form>
-                <label for="speakerOhms">required speaker resistance (ohms) </label>
-                <input type="text" id="speakerOhms" name="speakerOhms" value="4" /><br /><br />
-                <label for="wireOhms">wire / thread resistance (ohms per meter)</label>
-                <input type="text" id="wireOhms" name="wireOhms" value="0.25" /><br /><br />
-                <input type="button" value="Find Length" onclick="findLength()" /><br /><br />
-            </form>
+
+
+
+        <div id="spiralspec">
             <h2>Spiral</h2>
             <form>
                 <h3>Input</h3>
@@ -32,7 +29,8 @@
                 <label for="d_in">inner diameter (cm)</label>
                 <input type="text" id="d_in" name="d_in" /><br /><br />
                 <label for="segments">segments</label>
-                <input type="text" id="segments" name="segments" /><br /><br />
+                <input type="text" id="segments" name="segments" /><br />
+                <p class="note"> This refers to the number of segments in each turn, for example 3 segments makes a triangular spiral, and 6 makes a hexagonal spiral<br />
 
                 <p>Select type of spiral:</p>
                 <input type="radio" id="spiral_geometric" name="spiral_type" value="spiral_geometric">
@@ -41,7 +39,19 @@
                 <label for="spiral_smooth">Smooth</label><br /><br />
 
                 <input type="button" value="Generate Spiral" onclick="generateSpiral()" />
+            </div>
 
+        <div id="thread">
+            <h2>Thread and speaker</h2>
+            <form>
+                <label for="speakerOhms">required speaker resistance (ohms) </label>
+                <input type="text" id="speakerOhms" name="speakerOhms" value="4" /><br /><br />
+                <label for="wireOhms">wire / thread resistance (ohms per meter)</label>
+                <input type="text" id="wireOhms" name="wireOhms" value="0.25" /><br /><br />
+                <input type="button" value="Find Length" onclick="findLength()" /><br /><br />
+            </form>
+        </div>
+            <div id="output">
                 <h3>Output</h3>
 
                 <label for="d_out">outer diameter (cm)</label>
@@ -52,9 +62,14 @@
                 <input type="text" id="length_adjusted" name="length_adjusted" placeholder="..." readonly/><br /><br />
 
                 <input type="button" value="Save SVG" onclick="saveSvg()" />
-                <p>NOTE: Set image width and height dimensions to <span id="image_scale">_</span>cm</p>
+                <p class="note">NOTE: Set image width and height dimensions to <span id="image_scale">_</span>cm</p>
             </form>
+        </div>
+        </div>
+        </div>
             <div id="spiral_visual"></div>
+
+        </div>
         </div>
         <script src="spiral.js"></script>
     </body>

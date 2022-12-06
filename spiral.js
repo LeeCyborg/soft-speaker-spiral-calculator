@@ -150,53 +150,8 @@ function windowResized() {
 function draw() {
     clear();
 
-    let input_params = {
-        d_in: +document.getElementById("d_in").value,
-        d_out: +document.getElementById("d_out").value,
-        thickness: +document.getElementById("thickness").value,
-        segments: +document.getElementById("segments").value,
-    };
+    // input
 
-    if (document.getElementById("spiral_smooth").checked)
-    {
-        input_params.segments = 200;
-    }
-    else
-    {
-        input_params.segments = input_params.segments.toFixed(0);
-        if (input_params.segments < 3) {
-            input_params.segments = 3;
-        }
-        document.getElementById("segments").value = input_params.segments;
-    }
-
-    const spiral_points = getSpiralPoints(
-        input_params.d_out,
-        input_params.d_in,
-        input_params.thickness,
-        input_params.segments,
-        cnv_size
-    );
-
-    if (spiral_points.length > 1) {
-        let prev = spiral_points[0];
-        for (let k = 1; k < spiral_points.length; k++) {
-            line(prev[0], prev[1], spiral_points[k][0], spiral_points[k][1]);
-            prev = spiral_points[k];
-        }
-    }
-
-    document.getElementById("image_scale").innerHTML = input_params.d_out.toFixed(2);
-}
-
-// Button click events
-
-function saveSvg() {
-    redraw();
-    save("spiral.svg");
-}
-
-function generateSpiral() {
     let input_params = {
         d_in: +document.getElementById("d_in").value,
         thickness: +document.getElementById("thickness").value,
@@ -204,6 +159,8 @@ function generateSpiral() {
         segments: +document.getElementById("segments").value,
         smooth_spiral: document.getElementById("spiral_smooth").checked,
     };
+
+    // spiral info
 
     let spiral_info = {};
     if (input_params.smooth_spiral)
@@ -221,11 +178,40 @@ function generateSpiral() {
         spiral_info = getSpiralGeometric(input_params);
     }
 
+    // draw
+
+    const spiral_points = getSpiralPoints(
+        spiral_info.d_out,
+        input_params.d_in,
+        input_params.thickness,
+        input_params.segments,
+        cnv_size
+    );
+
+    if (spiral_points.length > 1) {
+        let prev = spiral_points[0];
+        for (let k = 1; k < spiral_points.length; k++) {
+            line(prev[0], prev[1], spiral_points[k][0], spiral_points[k][1]);
+            prev = spiral_points[k];
+        }
+    }
+
+    // output
+
     document.getElementById("d_out").value = spiral_info.d_out.toFixed(2);
     document.getElementById("turns").value = spiral_info.turns.toFixed(2);
     document.getElementById("length_adjusted").value = spiral_info.length_adjusted.toFixed(2);
+    document.getElementById("image_scale").innerHTML = spiral_info.d_out.toFixed(2);
+}
 
-    // draw spiral
+// Button click events
+
+function saveSvg() {
+    redraw();
+    save("spiral.svg");
+}
+
+function generateSpiral() {
     redraw();
 }
 

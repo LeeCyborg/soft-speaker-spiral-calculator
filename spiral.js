@@ -45,6 +45,50 @@ function getDiameter(length, dia_inner, thickness, segments) {
     return dia_outer;
 }
 
+// Get spiral info
+
+function getSpiralSmooth(input_params) {
+
+    const d_out = getDiameter(input_params.length, input_params.d_in, input_params.thickness, input_params.segments);
+    const turns = getSpiralTurns(d_out, input_params.d_in, input_params.thickness);
+    const length_adjusted = getSpiralLength(d_out, input_params.d_in, input_params.thickness);
+
+    return {
+        d_out: d_out,
+        turns: turns,
+        length_adjusted: length_adjusted
+    };
+}
+
+function getSpiralGeometric(input_params) {
+    const turn_increment = 1.0 / input_params.segments;
+    let prev_point = [0.5 * input_params.d_in, 0.0];
+
+    let d_out = input_params.d_in;
+    let turns = 0.0;
+    let length_adjusted = 0.0;
+
+    while (length_adjusted < input_params.length) {
+        turns += turn_increment;
+        d_out = input_params.d_in + 2.0 * input_params.thickness * turns;
+
+        const rad = 0.5 * d_out;
+        const ang = turns * 2.0 * Math.PI;
+        const pnt = [rad * Math.cos(ang), rad * Math.sin(ang)];
+        length_adjusted += Math.sqrt(Math.pow(pnt[0] - prev_point[0], 2) + Math.pow(pnt[1] - prev_point[1], 2));
+
+        prev_point = pnt;
+    }
+
+    return {
+        d_out: d_out,
+        turns: turns,
+        length_adjusted: length_adjusted
+    };
+}
+
+// drawing spiral points
+
 function pointToCanvas(x, y, dia_outer, canvas_size) {
     const scale = canvas_size / dia_outer;
     return [(x * scale + 0.5 * canvas_size), (-y * scale + 0.5 * canvas_size)];
@@ -79,6 +123,7 @@ window.onload = function () {
     document.getElementById("length").value = default_params.length;
     document.getElementById("segments").value = default_params.segments;
     document.getElementById("thickness").value = default_params.thickness;
+    document.getElementById("spiral_smooth").checked = true;
 
     generateSpiral();
 };
@@ -105,15 +150,38 @@ function windowResized() {
 function draw() {
     clear();
 
-    const input_params = {
+    // input
+
+    let input_params = {
         d_in: +document.getElementById("d_in").value,
-        d_out: +document.getElementById("d_out").value,
         thickness: +document.getElementById("thickness").value,
+        length: +document.getElementById("length").value,
         segments: +document.getElementById("segments").value,
+        smooth_spiral: document.getElementById("spiral_smooth").checked,
     };
 
+    // spiral info
+
+    let spiral_info = {};
+    if (input_params.smooth_spiral)
+    {
+        input_params.segments = 200;
+        spiral_info = getSpiralSmooth(input_params);
+    }
+    else
+    {
+        input_params.segments = input_params.segments.toFixed(0);
+        if (input_params.segments < 3) {
+            input_params.segments = 3;
+        }
+        document.getElementById("segments").value = input_params.segments;
+        spiral_info = getSpiralGeometric(input_params);
+    }
+
+    // draw
+
     const spiral_points = getSpiralPoints(
-        input_params.d_out,
+        spiral_info.d_out,
         input_params.d_in,
         input_params.thickness,
         input_params.segments,
@@ -127,6 +195,13 @@ function draw() {
             prev = spiral_points[k];
         }
     }
+
+    // output
+
+    document.getElementById("d_out").value = spiral_info.d_out.toFixed(2);
+    document.getElementById("turns").value = spiral_info.turns.toFixed(2);
+    document.getElementById("length_adjusted").value = spiral_info.length_adjusted.toFixed(2);
+    document.getElementById("image_scale").innerHTML = spiral_info.d_out.toFixed(2);
 }
 
 // Button click events
@@ -137,22 +212,6 @@ function saveSvg() {
 }
 
 function generateSpiral() {
-    const input_params = {
-        d_in: +document.getElementById("d_in").value,
-        thickness: +document.getElementById("thickness").value,
-        length: +document.getElementById("length").value,
-        segments: +document.getElementById("segments").value,
-    };
-
-    const d_out = getDiameter(input_params.length, input_params.d_in, input_params.thickness, input_params.segments);
-    const turns = getSpiralTurns(d_out, input_params.d_in, input_params.thickness);
-    const length_adjusted = getSpiralLength(d_out, input_params.d_in, input_params.thickness);
-
-    document.getElementById("d_out").value = d_out.toFixed(2);
-    document.getElementById("turns").value = turns.toFixed(2);
-    document.getElementById("length_adjusted").value = length_adjusted.toFixed(2);
-
-    // draw spiral
     redraw();
 }
 

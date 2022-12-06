@@ -24,6 +24,7 @@
             <h2>Spiral</h2>
             <form>
                 <h3>Input</h3>
+
                 <label for="length">length of wire (cm)</label>
                 <input type="text" id="length" name="length" /><br /><br />
                 <label for="thickness">distance between threads (cm)</label>
@@ -32,15 +33,26 @@
                 <input type="text" id="d_in" name="d_in" /><br /><br />
                 <label for="segments">segments</label>
                 <input type="text" id="segments" name="segments" /><br /><br />
-                <input type="button" value="Save SVG" onclick="saveSvg()" />
+
+                <p>Select type of spiral:</p>
+                <input type="radio" id="spiral_geometric" name="spiral_type" value="spiral_geometric">
+                <label for="spiral_geometric">Geometric</label><br /><br />
+                <input type="radio" id="spiral_smooth" name="spiral_type" value="spiral_smooth">
+                <label for="spiral_smooth">Smooth</label><br /><br />
+
                 <input type="button" value="Generate Spiral" onclick="generateSpiral()" />
+
                 <h3>Output</h3>
+
                 <label for="d_out">outer diameter (cm)</label>
                 <input type="text" id="d_out" name="d_out" placeholder="..." readonly/><br /><br />
                 <label for="turns">turns</label>
                 <input type="text" id="turns" name="turns" placeholder="..." readonly/><br /><br />
                 <label for="length_adjusted">exact length (cm)</label>
                 <input type="text" id="length_adjusted" name="length_adjusted" placeholder="..." readonly/><br /><br />
+
+                <input type="button" value="Save SVG" onclick="saveSvg()" />
+                <p>NOTE: Set image width and height dimensions to <span id="image_scale">_</span>cm</p>
             </form>
             <div id="spiral_visual"></div>
         </div>

@@ -68,8 +68,8 @@ h1{
     padding-left: 20px;
   }
   label{
-    margin: -12px;
     display: block;
+    float:left;
   }
   #output{
     border:2px solid black;

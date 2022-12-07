@@ -20,15 +20,13 @@
         <div id="spiralspec">
             <h2>Spiral</h2>
             <form>
-                <h3>Input</h3>
-
-                <label for="length">length of wire (cm)</label>
+                <label for="length">total length of wire (cm)</label><br>
                 <input type="text" id="length" name="length" /><br /><br />
-                <label for="thickness">distance between threads (cm)</label>
+                <label for="thickness">distance between turns (cm)</label><br>
                 <input type="text" id="thickness" name="thickness" /><br /><br />
-                <label for="d_in">inner diameter (cm)</label>
+                <label for="d_in">inner diameter (cm)</label><br>
                 <input type="text" id="d_in" name="d_in" /><br /><br />
-                <label for="segments">segments</label>
+                <label for="segments">segments</label><br>
                 <input type="text" id="segments" name="segments" /><br />
                 <p class="note"> This refers to the number of segments in each turn, for example 3 segments makes a triangular spiral, and 6 makes a hexagonal spiral<br />
 
@@ -38,37 +36,34 @@
                 <input type="radio" id="spiral_smooth" name="spiral_type" value="spiral_smooth">
                 <label for="spiral_smooth">Smooth</label><br /><br />
 
-                <input type="button" value="Generate Spiral" onclick="generateSpiral()" />
+                <input type="button" id="generate" value="Generate Spiral" onclick="generateSpiral()" />
             </div>
 
         <div id="thread">
             <h2>Thread and speaker</h2>
             <form>
-                <label for="speakerOhms">required speaker resistance (ohms) </label>
+                <label for="speakerOhms">required speaker resistance (ohms) </label><br>
                 <input type="text" id="speakerOhms" name="speakerOhms" value="4" /><br /><br />
-                <label for="wireOhms">wire / thread resistance (ohms per meter)</label>
+                <label for="wireOhms">wire / thread resistance (ohms per meter)</label><br>
                 <input type="text" id="wireOhms" name="wireOhms" value="0.25" /><br /><br />
                 <input type="button" value="Find Length" onclick="findLength()" /><br /><br />
             </form>
         </div>
-            <div id="output">
-                <h3>Output</h3>
+            <div id="output"> 
+                <h2>Output</h2>
 
-                <label for="d_out">outer diameter (cm)</label>
+                <label for="d_out">outer diameter (cm)</label><br>
                 <input type="text" id="d_out" name="d_out" placeholder="..." readonly/><br /><br />
-                <label for="turns">turns</label>
+                <label for="turns">turns</label><br>
                 <input type="text" id="turns" name="turns" placeholder="..." readonly/><br /><br />
-                <label for="length_adjusted">exact length (cm)</label>
+                <label for="length_adjusted">exact length (cm)</label><br>
                 <input type="text" id="length_adjusted" name="length_adjusted" placeholder="..." readonly/><br /><br />
 
                 <input type="button" value="Save SVG" onclick="saveSvg()" />
                 <p class="note">NOTE: Set image width and height dimensions to <span id="image_scale">_</span>cm</p>
             </form>
-        </div>
-        </div>
-        </div>
+            </div>
             <div id="spiral_visual"></div>
-
         </div>
         </div>
         <script src="spiral.js"></script>

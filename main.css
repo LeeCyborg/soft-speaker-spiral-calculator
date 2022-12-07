@@ -23,7 +23,8 @@ padding:10px;
 }
 #spiral_visual {
     max-width: 600px;
-   margin: 0 auto;
+   margin: 20px auto;
+   padding:10px;
 
 }
 
@@ -66,3 +67,22 @@ h1{
     border-left: solid 3px black;
     padding-left: 20px;
   }
+  label{
+    margin: -12px;
+    display: block;
+  }
+  #output{
+    border:2px solid black;
+    float:left;
+    width:40%;
+    padding:20px;
+    margin:0 0 10px 0;
+    background:Magenta;
+  }
+  #output p, #output h2, #output label{
+    color:white;
+  }
+#generate{ 
+    padding:10px;
+    background:magenta;
+ }

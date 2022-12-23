@@ -3,33 +3,44 @@ body {
     padding: 0;
     margin: 0;
     font-family: sans-serif;
+    background: #0A0A0D;
+    color: #A8B2BF;
 }
 
 #spiral_calc {
     min-width: 200px;
 }
-#spiralspec, #thread{ 
-    width:50%;
-    float:left;
-    min-height:100px;
- }
-p.note{ 
-    font-size:small;
-    color:grey;
- }
-#container{
-padding:10px;
 
+#spiralspec,
+#thread {
+    width: 48%;
+    float: left;
+    min-height: 100px;
+    min-width: 200px;
 }
+
+p.note {
+    font-size: small;
+    color: #878e96;
+    padding: 0 10px 0 10px;
+}
+
+#container {
+    padding: 2%;
+    overflow: auto;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
 #spiral_visual {
     max-width: 600px;
-   margin: 20px auto;
-   padding:10px;
-
+    margin: 0 auto;
+    padding: 10px 0 10px 0;
+    background: white;
 }
 
 input {
-    background: white;
+    background: #A8B2BF;
     color: black;
     border: 1px solid black;
     padding: 5px;
@@ -37,52 +48,70 @@ input {
 }
 
 input[type=button] {
-    background: black;
-    color: white;
+    background: #F2BF5E;
+    color: black;
     border: 1px solid black;
     padding: 5px;
     border-radius: 10px;
 }
 
 input:hover {
-    color: black;
-    border: 1px solid black;
-    background: magenta;
+    background: white;
 }
 
 input:focus {
     color: black;
-    border: 1px solid black;
-    background: yellow;
+    border: 1px solid #707C8C;
+    background: #F2BF5E;
 }
 
-h1{ 
-    background:magenta;
-    padding:10px;
-    margin:0px;
-    width:100%;
+h1 {
+    background: #5639BF;
+    padding: 10px;
+    margin: 0px;
+    margin-bottom: 10px;
+    color: white;
     border-bottom: 2px solid black;
- }
- h2 { 
-    border-left: solid 3px black;
-    padding-left: 20px;
-  }
-  label{
+}
+
+h2 {
+    color: #F2BF5E;
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+label {
     display: block;
-    float:left;
-  }
-  #output{
-    border:2px solid black;
-    float:left;
-    width:40%;
-    padding:20px;
-    margin:0 0 10px 0;
-    background:Magenta;
-  }
-  #output p, #output h2, #output label{
-    color:white;
-  }
-#generate{ 
-    padding:10px;
-    background:magenta;
- }
+    float: left;
+}
+
+#output {
+    border: 2px solid black;
+    float: left;
+    width: 40%;
+    padding: 20px;
+    margin: 0 0 10px 0;
+    background: #5639BF;
+    min-width: 200px;
+}
+
+#output p,
+#output h2,
+#output label {
+    color: white;
+}
+
+#generate {
+    padding: 10px;
+    background: #5639BF;
+    color: white;
+    border: 1px solid white;
+
+}
+
+#generate:hover {
+    padding: 10px;
+    background: white;
+    color: black;
+    border: 1px solid black;
+}

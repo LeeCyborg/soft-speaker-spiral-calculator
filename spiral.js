@@ -124,6 +124,7 @@ window.onload = function () {
     document.getElementById("segments").value = default_params.segments;
     document.getElementById("thickness").value = default_params.thickness;
     document.getElementById("spiral_smooth").checked = true;
+    document.getElementById("spiral_start_in").checked = true;
 
     generateSpiral();
 };
@@ -131,7 +132,6 @@ window.onload = function () {
 // Draw p5.js
 
 function setup() {
-    // const max_size = windowWidth - cnv_padding;
     cnv_size = document.getElementById("spiral_visual").offsetWidth;
     cnv = createCanvas(cnv_size, cnv_size, SVG);
     cnv.parent("spiral_visual");
@@ -158,6 +158,7 @@ function draw() {
         length: +document.getElementById("length").value,
         segments: +document.getElementById("segments").value,
         smooth_spiral: document.getElementById("spiral_smooth").checked,
+        out_to_in: document.getElementById("spiral_start_out").checked,
     };
 
     // spiral info
@@ -165,7 +166,7 @@ function draw() {
     let spiral_info = {};
     if (input_params.smooth_spiral)
     {
-        input_params.segments = 200;
+        input_params.segments = 50;
         spiral_info = getSpiralSmooth(input_params);
     }
     else
@@ -180,7 +181,7 @@ function draw() {
 
     // draw
 
-    const spiral_points = getSpiralPoints(
+    let spiral_points = getSpiralPoints(
         spiral_info.d_out,
         input_params.d_in,
         input_params.thickness,
@@ -189,10 +190,27 @@ function draw() {
     );
 
     if (spiral_points.length > 1) {
-        let prev = spiral_points[0];
-        for (let k = 1; k < spiral_points.length; k++) {
-            line(prev[0], prev[1], spiral_points[k][0], spiral_points[k][1]);
-            prev = spiral_points[k];
+        if (input_params.out_to_in) {
+            spiral_points = spiral_points.reverse()
+        }
+        if (input_params.smooth_spiral) {
+            // make a smooth curve
+            beginShape();
+            curveVertex(spiral_points[0][0], spiral_points[0][1]);
+            for (let k = 0; k < spiral_points.length; k++)
+            {
+                curveVertex(spiral_points[k][0], spiral_points[k][1]);
+            }
+            const lastIndex = spiral_points.length - 1;
+            curveVertex(spiral_points[lastIndex][0], spiral_points[lastIndex][1]);
+            endShape();
+        } else {
+            beginShape();
+            for (let k = 0; k < spiral_points.length; k++)
+            {
+                vertex(spiral_points[k][0], spiral_points[k][1]);
+            }
+            endShape();
         }
     }
 

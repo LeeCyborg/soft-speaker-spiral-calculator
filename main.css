@@ -31,6 +31,18 @@ p.note {
     max-width: 800px;
     margin: 0 auto;
 }
+#container > h2{
+    color:#878e96;
+    font-weight:lighter;
+    line-height:1.5;
+}
+#container > h2 a, #container > h2 a:visited{
+    color: #A8B2BF;
+}
+#container > h2 a:hover{
+    color: #A8B2BF;
+    text-decoration:none;
+}
 
 #spiral_visual {
     max-width: 600px;
